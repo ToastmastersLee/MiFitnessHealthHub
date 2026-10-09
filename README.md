@@ -2,6 +2,8 @@
 
 **交接与换机恢复入口：[HANDOVER.md](HANDOVER.md)。** 手册、代码与复现步骤都在本仓库内，随 Git 保存。
 
+**查看多年个人数据：[官方导出与 Zepp Life 历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** 当前尚无真实数据；先通过官方导出获取历史基线，再按实际文件格式适配。
+
 面向 **小米手环 9 系列 + 小米运动健康 Mi Fitness** 的本地数据项目。
 Python 3.11+ / SQLite / Windows PowerShell。当前完成离线数据链路 PoC；真实设备、账号地区、固件与云端认证的组合尚未验证。
 
@@ -124,6 +126,6 @@ subject 是自选本地别名，使用字母、数字、`_`、`-`；不要填真
 | `docs/VALIDATION.md` | 本次实测结果与复现方式 |
 | `docs/NEXT_STEPS.md` | 地区、凭证、真实兼容性和远程仓库待办 |
 
-`data/`、`work/`、`.venv/`、数据库、导出和日志全部被 Git 忽略。Git 仅跟踪代码、说明和合成测试；当前无远程仓库。
+`data/`、`work/`、`private/`、`.venv/`、数据库、导出和日志全部被 Git 忽略。Git 仅跟踪代码、说明和合成测试；已配置 `origin` 为 `https://github.com/ToastmastersLee/MiFitnessHealthHub.git`，尚未推送。
 
 `requirements-win-py313.lock.txt` 保存本轮 Windows Python 3.13.5 依赖版本；同平台复现可用 `python -m pip install -r requirements-win-py313.lock.txt`，其他平台/次版本需重新验证依赖。

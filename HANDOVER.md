@@ -8,6 +8,8 @@ D:\Github\MiFitnessHealthHub
 
 这是仓库内的正式交接入口，随 Git 一起保存。上面的路径是首次搭建位置；换机后可以使用其他克隆目录，后续命令均在项目根目录执行。
 
+**当前获取个人数据的入口：[官方导出与多年历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** 先获取 Zepp Life / Mi Fitness 的官方导出，再适配真实文件；目前只有合成数据。
+
 Python 3.11+ 项目声明；本机实际使用 Miniconda Python 3.13.5 创建的独立 `.venv`。SQLite 核心不需要第三方运行依赖，桥接器独立安装并固定提交。
 
 ## 主要文件
@@ -56,7 +58,7 @@ Python 3.11+ 项目声明；本机实际使用 Miniconda Python 3.13.5 创建的
 - 分支：`main`；初始提交：`e5c3f18`。
 - 核心代码、依赖声明、测试及本手册均由 Git 跟踪；当前状态以 `git status` 为准。
 - 数据库、JSON 导出、CSV、日志、work 和 venv 不在跟踪列表。
-- 本次交接修正时仍无远程地址，没有创建远程仓库或推送；建立远程并推送后，才可在另一台机器从 GitHub 克隆。
+- 用户已创建仓库；origin 为 `https://github.com/ToastmastersLee/MiFitnessHealthHub.git`，本次尚未推送。推送代码后才可在另一台机器从 GitHub 恢复该项目。
 
 ## 换机器恢复（仓库已推送之后）
 
@@ -65,8 +67,7 @@ Python 3.11+ 项目声明；本机实际使用 Miniconda Python 3.13.5 创建的
 在你选择的项目父目录打开 PowerShell：
 
 ```powershell
-$repoUrl = Read-Host '输入你创建并已推送的 GitHub 仓库 HTTPS 地址'
-git clone $repoUrl MiFitnessHealthHub
+git clone https://github.com/ToastmastersLee/MiFitnessHealthHub.git MiFitnessHealthHub
 Set-Location -LiteralPath '.\MiFitnessHealthHub'
 .\scripts\setup.ps1 -WithBridge
 .\scripts\test.ps1
@@ -96,5 +97,4 @@ Set-Location -LiteralPath '.\MiFitnessHealthHub'
 .\.venv\Scripts\python.exe scripts/poc.py
 ```
 
-你接下来可自行创建空 GitHub 仓库，推荐名称 `MiFitnessHealthHub`，将 HTTPS 仓库地址交给 Codex。
-真实同步前需确认具体手环型号、Mi Fitness 账户地区和可信凭证获取前提；不要把任何凭证发到聊天。当前云端脚本只提供带明确开关和日期范围的待验证雏形。
+接下来由用户在官方页面自行申请历史数据副本，保存到被 Git 忽略的 private/ 目录，并授权本地解析具体文件。真实桥接同步前再确认 Mi Fitness 账户地区和可信凭证获取前提；不要把任何凭证发到聊天。当前云端脚本只提供带明确开关和日期范围的待验证雏形。

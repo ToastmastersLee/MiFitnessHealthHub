@@ -6,8 +6,8 @@
 
 1. 在 `D:\Github\MiFitnessHealthHub` 运行 `scripts/test.ps1` 和 `.venv/Scripts/python.exe scripts/poc.py`，查看 `data/poc/result.json`。
 2. 阅读桥接器评估及隐私约定。当前只使用合成数据，没有真实登录或上传。
-3. 自行在 GitHub 创建一个空仓库，推荐 `MiFitnessHealthHub`。为便于后续衔接，可不预置 README、license 或 .gitignore。
-4. 将仓库 HTTPS 地址交给 Codex；本轮没有添加远程地址、创建远程仓库或推送。首次推送前再检查跟踪文件。
+3. 用户已创建 `ToastmastersLee/MiFitnessHealthHub`，本地已配置对应 HTTPS 地址为 origin，尚未推送。首次推送前再检查跟踪文件。
+4. 当前目标为多年个人睡眠及运动历史：优先按 [官方导出流程](PERSONAL_DATA_ONBOARDING.md) 保存 Zepp Life 和 Mi Fitness 数据；取得实际文件后再适配导入，不必先获取非官方 Token。
 
 ## 在真实账号验证前确认
 
