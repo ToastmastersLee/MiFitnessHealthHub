@@ -1,0 +1,2 @@
+# Core import/query pipeline uses the Python standard library only.
+-e .

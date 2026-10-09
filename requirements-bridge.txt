@@ -1,0 +1,3 @@
+# Optional third-party bridge, pinned to the evaluated source revision.
+# AGPL-3.0-only; see docs/BRIDGE_EVALUATION.md.
+mi-fitness-data-bridge @ git+https://github.com/shkyyy18/mi_fitness_data_bridge.git@ae70f5e6e167474e93d4c2beeb8ae3d3297d5ade
