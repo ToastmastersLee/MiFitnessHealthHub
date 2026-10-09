@@ -1,6 +1,7 @@
 # MiFitnessHealthHub working rules
 
-- Read README.md and docs/BRIDGE_EVALUATION.md before changing the integration.
+- Read README.md, HANDOVER.md and docs/BRIDGE_EVALUATION.md before changing the integration.
+- Keep project handovers and durable operating instructions inside this repository and tracked by Git; use repository-relative links in documents so they remain usable after cloning on another machine.
 - Use synthetic data only in tests, fixtures, screenshots and reports.
 - Do not read real account credentials or health records into an agent session without the user's specific authorization.
 - Keep data/, work/, exports/, private/, databases and .env out of Git. Do not force-add ignored files.

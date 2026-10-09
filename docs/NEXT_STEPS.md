@@ -1,5 +1,7 @@
 # 用户后续操作
 
+仓库交接入口与换机器后的完整恢复流程见 [HANDOVER.md](../HANDOVER.md)。代码和文档通过 Git 恢复；私有数据与账号凭证按手册单独处理。
+
 ## 现在可用
 
 1. 在 `D:\Github\MiFitnessHealthHub` 运行 `scripts/test.ps1` 和 `.venv/Scripts/python.exe scripts/poc.py`，查看 `data/poc/result.json`。

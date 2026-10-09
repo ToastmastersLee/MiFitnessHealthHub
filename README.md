@@ -1,5 +1,7 @@
 # MiFitnessHealthHub
 
+**交接与换机恢复入口：[HANDOVER.md](HANDOVER.md)。** 手册、代码与复现步骤都在本仓库内，随 Git 保存。
+
 面向 **小米手环 9 系列 + 小米运动健康 Mi Fitness** 的本地数据项目。
 Python 3.11+ / SQLite / Windows PowerShell。当前完成离线数据链路 PoC；真实设备、账号地区、固件与云端认证的组合尚未验证。
 
