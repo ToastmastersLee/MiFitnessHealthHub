@@ -2,7 +2,7 @@
 
 **交接与换机恢复入口：[HANDOVER.md](HANDOVER.md)。** 手册、代码与复现步骤都在本仓库内，随 Git 保存。
 
-**查看多年个人数据：[官方导出与 Zepp Life 历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** 当前尚无真实数据；先通过官方导出获取历史基线，再按实际文件格式适配。
+**查看多年个人数据：[官方导出与 Zepp Life 历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** 已支持 Zepp Life 官方 CSV 的本地导入与历史页面；Mi Fitness 官方导出仍待适配。
 
 面向 **小米手环 9 系列 + 小米运动健康 Mi Fitness** 的本地数据项目。
 Python 3.11+ / SQLite / Windows PowerShell。当前完成离线数据链路 PoC；真实设备、账号地区、固件与云端认证的组合尚未验证。
@@ -17,6 +17,8 @@ Mi Fitness 云端
   → 整批验证 → data/healthhub.db
   → 本地 SQL / 数量及覆盖范围摘要 → 用户选择是否交给 Codex
 ```
+
+官方 Zepp Life 导出可直接使用 [离线导入与历史页面](docs/ZEPP_LIFE_IMPORT.md)。私人 SQLite 与报告留在 `data/` / `private/`，均不随 Git 上传。
 
 ## 已具备的功能
 
@@ -62,7 +64,7 @@ PoC 调用固定版本的上游 `examples/synthetic_demo.py` 中的 seed 和真�
 
 ## 本地导入与检查
 
-输入必须是桥接器真实导出结构；每行需要 `id`、`user_id` 和相应日期/时间列。这里只导入 JSON，CSV 是桥接器输出供人工使用的格式。
+输入必须是桥接器真实导出结构；每行需要 `id`、`user_id` 和相应日期/时间列。本节只导入桥接 JSON；Zepp Life 官方 CSV 使用独立的 `import-zepp` 命令。
 
 ```powershell
 # 使用合成文件验证

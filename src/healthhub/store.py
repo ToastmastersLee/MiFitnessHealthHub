@@ -34,15 +34,28 @@ CREATE TABLE IF NOT EXISTS import_runs (
 def import_file(
     path: Path, db_path: Path, subject: str = "band9-local", utc_offset: str = "+08:00"
 ) -> dict:
-    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", subject):
-        raise ValidationError(
-            "Subject must be a short local alias containing letters, digits, _ or -"
-        )
-    parse_offset(utc_offset)
     raw, payload = read_export(path)
     rows = validate(payload, utc_offset)
+    return import_rows(
+        rows, db_path, subject, utc_offset, hashlib.sha256(raw).hexdigest(), "1.0",
+        {name: len(items) for name, items in payload["records"].items()},
+    )
+
+
+def import_rows(
+    rows: list[dict], db_path: Path, subject: str, utc_offset: str,
+    source_sha256: str, source_schema: str, dataset_counts: dict,
+) -> dict:
+    """Persist fully validated adapter rows with the shared transactional audit."""
+    if not re.fullmatch(r"[a-zA-Z0-9_-]{1,64}", subject):
+        raise ValidationError("Subject must be a short local alias")
+    parse_offset(utc_offset)
+    if len({row["account"] for row in rows}) > 1:
+        raise ValidationError("Multiple accounts in one import")
+    identities = [(row["dataset"], row["id"]) for row in rows]
+    if len(identities) != len(set(identities)):
+        raise ValidationError("Duplicate record identities in one import")
     counts = {"inserted": 0, "updated": 0, "unchanged": 0}
-    dataset_counts = {name: len(items) for name, items in payload["records"].items()}
     now = datetime.now(UTC).isoformat()
     db_path.parent.mkdir(parents=True, exist_ok=True)
     with closing(sqlite3.connect(db_path, timeout=30)) as conn:
@@ -123,8 +136,8 @@ def import_file(
                 (
                     now,
                     subject,
-                    hashlib.sha256(raw).hexdigest(),
-                    "1.0",
+                    source_sha256,
+                    source_schema,
                     counts["inserted"],
                     counts["updated"],
                     counts["unchanged"],

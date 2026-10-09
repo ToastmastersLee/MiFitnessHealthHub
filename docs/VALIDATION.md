@@ -1,10 +1,10 @@
 # 本轮验证结果
 
-日期：2026-10-09（Asia/Shanghai）。全部样本为合成数据，未使用真实账户或个人健康记录。
+日期：2026-10-09（Asia/Shanghai）。工程测试与 PoC 全部使用合成数据。另在用户授权的本机私有导出上检查了 Zepp Life 导入幂等性、原文件指纹及 SQLite 完整性，具体个人结果只保存在 private。
 
 | 检查 | 结果 |
 | --- | --- |
-| 核心单元与 CLI 测试 | 49 passed |
+| 核心单元与 CLI 测试 | 64 passed |
 | 上游选定离线测试 | 34 passed（export、CLI security、DB path override） |
 | 上游原始 synthetic_demo.py | 成功：4 条合成记录，JSON + 10 个 CSV |
 | 桥接器 → Hub PoC | 成功：首次新增 4，重跑新增 0、更新 0、不变 4 |
@@ -53,4 +53,12 @@ D:\Github\MiFitnessHealthHub\work\bridge-verification\
 
 依赖版本快照：`requirements-win-py313.lock.txt`。它记录本轮 Windows CPython 3.13.5 安装的第三方版本和固定桥接器提交，可在相同平台环境复现。其他平台或 Python 次版本优先使用 requirements-dev.txt / requirements-bridge.txt 后重新验证，不把该快照当作跨平台锁文件。
 
-Git 主分支为 main；代码、配置示例、说明、测试、依赖声明可跟踪。私有目录、数据库和导出不进入初始提交。无远程仓库、无推送、无计划任务注册。
+Git 主分支为 main；代码、配置示例、说明、测试、依赖声明可跟踪。私有目录、数据库和导出不进入初始提交。已配置用户提供的远程仓库；无推送、无计划任务注册。
+
+## Zepp Life 新增验证
+
+- 合成 CSV 转义引号、午睡 JSON、null、UTC 跨日和未知类型代码。
+- 占位/异常睡眠保留原文、排除均值；缺少日期与异常行分别计数。
+- 重跑不新增，修正更新；账号混入、重复主键、坏数值和未知非空明细整份拒绝。
+- 报告只能写入 private，SQLite 完整性检查通过；页面年月筛选已验证。
+- 本轮实际运行仍为 Python 3.13.5；未登录或执行云端同步。

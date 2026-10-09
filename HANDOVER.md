@@ -8,7 +8,7 @@ D:\Github\MiFitnessHealthHub
 
 这是仓库内的正式交接入口，随 Git 一起保存。上面的路径是首次搭建位置；换机后可以使用其他克隆目录，后续命令均在项目根目录执行。
 
-**当前获取个人数据的入口：[官方导出与多年历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** 先获取 Zepp Life / Mi Fitness 的官方导出，再适配真实文件；目前只有合成数据。
+**当前获取个人数据的入口：[官方导出与多年历史处理](docs/PERSONAL_DATA_ONBOARDING.md)。** Zepp Life 官方 CSV 已可离线导入，参见 [导入及报告重建](docs/ZEPP_LIFE_IMPORT.md)；Mi Fitness 官方导出仍待适配。
 
 Python 3.11+ 项目声明；本机实际使用 Miniconda Python 3.13.5 创建的独立 `.venv`。SQLite 核心不需要第三方运行依赖，桥接器独立安装并固定提交。
 
@@ -36,7 +36,7 @@ Python 3.11+ 项目声明；本机实际使用 Miniconda Python 3.13.5 创建的
 
 ## 实测结果
 
-- 本项目测试：49 passed；上游选定离线测试：34 passed。
+- 本项目测试：64 passed；上游选定离线测试：34 passed。
 - 原始上游合成演示：4 条记录，JSON + 10 个 CSV 导出成功。
 - 桥接导出 → Hub SQLite：首次新增 4；再次导入新增 0、更新 0、不变 4。
 - 全部 10 类数据集的合成导入、更新、坏记录拒绝、账号混入拒绝和 null 保留通过。
@@ -85,7 +85,7 @@ Set-Location -LiteralPath '.\MiFitnessHealthHub'
 
 ### 需另行恢复的私有内容
 
-`data/`、`backups/`、`.env`、日志与 Windows 凭证存储不随 Git 同步。当前只有合成数据，重跑 PoC 即可重建。将来有真实健康数据时，必须由用户通过自己的安全备份单独迁移；迁移 SQLite 前停止所有写入程序，使用一致性备份，避免复制正在写入的数据库。
+`data/`、`backups/`、`.env`、日志与 Windows 凭证存储不随 Git 同步。PoC 合成数据可以重跑重建；实际 Zepp Life 原始导出、数据库及报告必须由用户通过自己的安全备份单独迁移；迁移 SQLite 前停止所有写入程序，使用一致性备份，避免复制正在写入的数据库。
 
 凭证在新机器上由用户重新交互式配置，不能通过 Git 迁移，也不放进本手册。Windows 计划任务和 MCP 连接需要单独建立；本轮没有注册它们。代码和说明可直接恢复，私有数据迁移不能由 Git 替代。
 
@@ -98,3 +98,9 @@ Set-Location -LiteralPath '.\MiFitnessHealthHub'
 ```
 
 接下来由用户在官方页面自行申请历史数据副本，保存到被 Git 忽略的 private/ 目录，并授权本地解析具体文件。真实桥接同步前再确认 Mi Fitness 账户地区和可信凭证获取前提；不要把任何凭证发到聊天。当前云端脚本只提供带明确开关和日期范围的待验证雏形。
+
+## Zepp Life 历史的恢复
+
+适配器为 `src/healthhub/zepp.py`；本地页面生成器为 `src/healthhub/zepp_report.py`。
+恢复 private 中原始导出后，按 [说明](docs/ZEPP_LIFE_IMPORT.md) 运行 `scripts/import_zepp.ps1`。
+数据详情和统计仅保存在 `private/analysis/zepp-life/`；本手册不记录个人数据数量、年份或账号。
